@@ -122,12 +122,15 @@ def create_image_folsom(client, image_meta, image_file):
     return vars(image)
 
 
-def register_image(client, qcow2_path, name, owner, existing_image):
+def register_image(client, qcow2_path, name, options, existing_image):
     """
     Register the given image with Glance.
     """
+    owner = options.username
+    is_public = not options.private
+
     image_meta = {'name': name,
-                  'is_public': True,
+                  'is_public': is_public,
                   'disk_format': 'qcow2',
                   'min_disk': 0,
                   'min_ram': 0,

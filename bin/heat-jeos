@@ -198,7 +198,7 @@ def command_create(options, arguments):
                 logging.info('No action taken')
                 sys.exit(0)
         image_id = glance.register_image(client, qcow2_path, image_name,
-                                  options.username, image)
+                                  options, image)
         print('\nImage %s was registered with ID %s' % (image_name, image_id))
     except glance.ConnectionError, e:
         logging.error('Failed to connect to the Glance API server.')
@@ -253,6 +253,9 @@ def create_options(parser):
     parser.add_option('-H', '--glance-host',
                       default=None,
                       help="Glance hostname")
+    parser.add_option('-p', '--private',
+                      default=False, action="store_true",
+                      help="Sets glance image to private instead of public")
     parser.add_option('-P', '--glance-port',
                       default=None,
                       help="Glance port number")
